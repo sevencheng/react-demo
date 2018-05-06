@@ -1,27 +1,33 @@
 const path = require('path');
 const webpack = require('webpack');
-const bundlePath = path.relative(__dirname, '/dist/');
+const localPath = __dirname + '/dist/';
+const publicPath = 'http://localhost:9000/public/';
 
 module.exports = {
-    entry: './src/index.js',
+    entry: './src/index.jsx',
     devtool: 'inline-source-map',
+    resolve: {
+        extensions: ['*', '.js', '.jsx']
+    },
+    output: {
+        filename: 'bundle.js',
+        path: localPath,
+        publicPath: publicPath
+    },
     module: {
         rules: [{
                 test: /\.(js|jsx)$/,
                 exclude: /(node_modules|bower_components)/,
                 loader: 'babel-loader',
-                options: { presets: ['env'] }
+                options: {
+                    presets: ["env", "react"]
+                }
             },
             {
                 test: /\.css$/,
                 use: ['style-loader', 'css-loader']
             }
         ]
-    },
-    resolve: { extensions: ['*', '.js', '.jsx'] },
-    output: {
-        publicPath: bundlePath,
-        filename: 'bundle.js'
     },
     devServer: {
         contentBase: path.join(__dirname, 'public'),
@@ -30,8 +36,8 @@ module.exports = {
         inline: true,
         hot: true,
         hotOnly: true,
-        open: true,
-        publicPath: "http://localhost:9000/dist/"
+        open: true
+        //publicPath: "http://localhost:9000/public/"
     },
     plugins: [new webpack.HotModuleReplacementPlugin()]
 };
