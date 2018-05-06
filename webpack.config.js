@@ -1,13 +1,13 @@
 const path = require('path');
 const webpack = require('webpack');
 const localPath = __dirname + '/dist/';
-const publicPath = 'http://localhost:9000/public/';
+const publicPath = 'http://localhost:9000/dist/';
 
 module.exports = {
-    entry: './src/index.jsx',
+    entry: './src/index.tsx',
     devtool: 'inline-source-map',
     resolve: {
-        extensions: ['*', '.js', '.jsx']
+        extensions: [".ts", ".tsx", ".js", ".json"]
     },
     output: {
         filename: 'bundle.js',
@@ -16,28 +16,34 @@ module.exports = {
     },
     module: {
         rules: [{
-                test: /\.(js|jsx)$/,
-                exclude: /(node_modules|bower_components)/,
-                loader: 'babel-loader',
-                options: {
-                    presets: ["env", "react"]
-                }
+                test: /\.(tsx|ts)$/,
+                exclude: /^node_modules$/,
+                use: 'awesome-typescript-loader'
             },
             {
-                test: /\.css$/,
-                use: ['style-loader', 'css-loader']
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
+            {
+                test: /\.(less|css)$/,
+                exclude: /^node_modules$/,
+                use: ["style-loader", "css-loader", "less-loader"]
             }
         ]
     },
+    externals: {
+        "react": "React",
+        "react-dom": "ReactDOM"
+    },
     devServer: {
-        contentBase: path.join(__dirname, 'public'),
+        contentBase: path.join(__dirname, 'dist'),
         compress: true,
         port: 9000,
         inline: true,
         hot: true,
         hotOnly: true,
         open: true
-        //publicPath: "http://localhost:9000/public/"
     },
     plugins: [new webpack.HotModuleReplacementPlugin()]
 };
