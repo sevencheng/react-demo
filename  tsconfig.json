@@ -3,12 +3,19 @@
         "moduleResolution": "node",
         "outDir": "./dist/",
         "sourceMap": true,
-        "noImplicitAny": true,
         "module": "commonjs",
         "target": "es5",
         "jsx": "react",
+        "allowJs": false,
+        "noImplicitThis": true,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "skipDefaultLibCheck": true,
         "skipLibCheck": true,
-        "downlevelIteration": true
+        "downlevelIteration": true,
+        "lib": ["es6", "dom", "scripthost"],
+        "allowSyntheticDefaultImports": true,
+        "experimentalDecorators": true
     },
     "include": [
         "./src/**/*"
@@ -16,5 +23,13 @@
     "exclude": [
         "node_modules",
         "**/*.spec.ts"
-    ]
+    ],
+    "awesomeTypescriptLoaderOptions": {
+        "useBabel": true,
+        "useCache": true,
+        "useTranspileModule": true,
+        "forkChecker": true,
+        "useWebpackText": true,
+        "transpileOnly": true
+    }
 }

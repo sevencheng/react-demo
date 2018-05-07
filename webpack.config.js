@@ -1,7 +1,8 @@
 const path = require('path');
 const webpack = require('webpack');
-const localPath = __dirname + '/dist/';
+const localPath = path.resolve(__dirname + '/dist/');
 const publicPath = 'http://localhost:9000/dist/';
+
 
 module.exports = {
     entry: './src/index.tsx',
